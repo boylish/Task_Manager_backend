@@ -3,18 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-const { connect } = require("http2");
 const connectDB = require("./config/db");
-
-
-// importing routes
-const authRoutes = require("./routes/authRoutes");
-
-const userRoutes = require("./routes/userRoutes")
-
-const taskRoutes = require("./routes/taskRoutes")
-
-const reportRoutes = require("./routes/reportRoutes")
 
 // Initialize dotenv
 dotenv.config();
@@ -22,37 +11,36 @@ dotenv.config();
 // Create express app
 const app = express();
 
-// Middlewares to handle cors
+// Middleware to handle CORS
 app.use(
-    cors({
-        origin:process.env.CLIENT_URL || "*",
-        methods:["GET" , "POST", "PUT", "DELETE"],
-        allowedHeaders:["Content-Type", "Authorization"],
-    })
+  cors({
+    origin: "https://task-manager-frontend-three-omega.vercel.app/", // Directly set frontend URL here
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 
-// connect database
+// Connect to the database
 connectDB();
 
-
-// middlewares
+// Middleware to parse incoming JSON
 app.use(express.json());
 
+// Import routes
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const taskRoutes = require("./routes/taskRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/report", reportRoutes);
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 app.use("/api/task", taskRoutes);
 
+// Static file serving for uploads
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
-// Start Server
+// Start the server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=>console.log(`server is running on port  ${PORT}`))
-
-
-
-
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
