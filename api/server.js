@@ -11,6 +11,9 @@ const userRoutes = require("../routes/userRoutes");
 const taskRoutes = require("../routes/taskRoutes");
 const reportRoutes = require("../routes/reportRoutes");
 
+// Import the upload middleware for image uploads
+const upload = require("../middlewares/uploadMiddlewares");
+
 // Initialize dotenv
 dotenv.config();
 
