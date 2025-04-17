@@ -14,7 +14,7 @@ const app = express();
 // Middleware to handle CORS
 app.use(
   cors({
-    origin: "https://task-manager-frontend-three-omega.vercel.app/", // Directly set frontend URL here
+    origin: "https://task-manager-frontend-three-omega.vercel.app", // Directly set frontend URL here (No trailing slash)
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
