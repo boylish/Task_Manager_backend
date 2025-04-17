@@ -11,14 +11,17 @@ dotenv.config();
 // Create express app
 const app = express();
 
-// Middleware to handle CORS
+// Handle preflight OPTIONS request manually
+app.options("*", cors());
+
+// Middleware to handle CORS (temporarily set to allow all origins for troubleshooting)
 app.use(
   cors({
-    origin: "https://task-manager-frontend-three-omega.vercel.app", // Frontend URL without trailing slash
+    origin: "*", // Allow all origins for troubleshooting
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Ensure OPTIONS is included
     allowedHeaders: ["Content-Type", "Authorization"],
     preflightContinue: false, // Stop the request from continuing to other middleware if it's a preflight request
-    optionsSuccessStatus: 204, // Send a success status for OPTIONS requests (204 is standard)
+    optionsSuccessStatus: 204, // Send a success status for OPTIONS requests
   })
 );
 
