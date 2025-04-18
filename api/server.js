@@ -21,13 +21,18 @@ dotenv.config();
 const app = express();
 
 // Middlewares to handle CORS
+// Middlewares to handle CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: [
+      "https://task-manager-frontend-alpha-beige.vercel.app", // First frontend URL
+      "https://task-manager-frontend-h9t6qfkmy-rajans-projects-dc6a7436.vercel.app" // Second frontend URL
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 // Connect database
 connectDB();
