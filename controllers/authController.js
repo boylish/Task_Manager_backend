@@ -94,7 +94,10 @@ const getUserProfile = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.json(user);
+    res.json({
+      ...user.toObject(),
+      profileImage: `${process.env.BASE_URL}/${user.profileImage}`
+    });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
